@@ -20,12 +20,20 @@ const Navbar = () => {
     dispatch(removeUser());
     navigate("/login");
   };
+
   return (
     <div className="navbar bg-base-300 shadow-sm">
-      <div className="flex-1">
-        <a className="btn btn-ghost text-xl">DevTinder</a>
+      <div className="navbar-start">
+        <a className="btn btn-ghost text-xl flex items-center gap-2">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/10329/10329496.png"
+            alt="DevTinder Logo"
+            className="w-8 h-8 object-contain"
+          />
+          DevTinder
+        </a>
       </div>
-      <div className="flex gap-2">
+      <div className="navbar-end">
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -35,7 +43,7 @@ const Navbar = () => {
             {user && (
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
+                  alt="User Avatar"
                   src={
                     user
                       ? user.photoURL
