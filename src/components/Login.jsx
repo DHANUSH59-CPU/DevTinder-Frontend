@@ -1,10 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
-import { Eye, EyeOff, Heart } from "lucide-react";
+import { Eye, EyeOff, Heart, Code } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
-import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,23 +44,39 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full mb-4 shadow-lg shadow-pink-500/25">
-            <Heart className="w-8 h-8 text-white fill-current" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 rounded-2xl mb-6 shadow-2xl shadow-purple-500/30 border border-purple-400/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-transparent animate-pulse"></div>
+            <Code className="w-10 h-10 text-white relative z-10" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-300">Sign in to find your perfect match</p>
+          <h1 className="text-4xl font-bold text-white mb-3">DevTinder</h1>
+          <p className="text-gray-300 text-lg">Enter the Developer Realm</p>
+          <div className="flex justify-center space-x-1 mt-2">
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+          </div>
         </div>
 
         {/* Login Form */}
-        <div className="bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-3xl shadow-2xl p-8 relative overflow-hidden">
+          {/* Animated border glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-700/20 via-transparent to-gray-700/20 rounded-3xl blur-sm"></div>
+
+          <div className="space-y-6 relative z-10">
             {/* Error Message */}
             {error && (
-              <div className="bg-red-900/50 border border-red-500/50 text-red-300 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-900/30 border border-red-400/30 text-red-300 px-4 py-3 rounded-xl text-sm backdrop-blur-sm">
                 {error}
               </div>
             )}
@@ -69,7 +85,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-gray-200 mb-3"
               >
                 Email Address
               </label>
@@ -78,8 +94,8 @@ const Login = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors duration-200 focus:bg-gray-700"
-                placeholder="Enter your email"
+                className="w-full px-4 py-4 border border-gray-600 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 focus:bg-gray-700 backdrop-blur-sm hover:border-gray-500"
+                placeholder="developer@example.com"
                 required
                 disabled={isLoading}
               />
@@ -89,7 +105,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-200 mb-2"
+                className="block text-sm font-medium text-gray-200 mb-3"
               >
                 Password
               </label>
@@ -99,15 +115,15 @@ const Login = () => {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors duration-200 focus:bg-gray-700 pr-12"
-                  placeholder="Enter your password"
+                  className="w-full px-4 py-4 border border-gray-600 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 focus:bg-gray-700 pr-12 backdrop-blur-sm hover:border-gray-500"
+                  placeholder="Enter your secret code"
                   required
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-pink-400 transition-colors duration-200"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-200"
                   disabled={isLoading}
                 >
                   {showPassword ? (
@@ -127,19 +143,19 @@ const Login = () => {
                   id="remember"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 text-pink-500 bg-gray-700 border-gray-600 rounded focus:ring-pink-500 focus:ring-2"
+                  className="w-4 h-4 text-purple-500 bg-gray-800 border-gray-600 rounded focus:ring-purple-400 focus:ring-2"
                   disabled={isLoading}
                 />
                 <label
                   htmlFor="remember"
-                  className="ml-2 text-sm text-gray-300"
+                  className="ml-3 text-sm text-gray-300"
                 >
                   Remember me
                 </label>
               </div>
               <button
                 type="button"
-                className="text-sm text-pink-400 hover:text-pink-300 font-medium transition-colors duration-200 disabled:opacity-50"
+                className="text-sm text-gray-400 hover:text-white font-medium transition-colors duration-200 disabled:opacity-50"
                 disabled={isLoading}
               >
                 Forgot password?
@@ -149,17 +165,23 @@ const Login = () => {
             {/* Login Button */}
             <button
               type="submit"
+              onClick={handleSubmit}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 focus:ring-4 focus:ring-pink-300/50 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-pink-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white py-4 px-4 rounded-xl font-semibold hover:from-purple-500 hover:via-violet-500 hover:to-indigo-500 focus:ring-4 focus:ring-purple-400/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
             >
-              {isLoading ? "Signing In..." : "Sign In"}
+              <span className="relative z-10">
+                {isLoading ? "Signing In..." : "Enter Developer Mode"}
+              </span>
+              {!isLoading && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              )}
             </button>
-          </form>
+          </div>
 
           {/* Divider */}
-          <div className="my-6 flex items-center">
+          <div className="my-8 flex items-center">
             <div className="flex-1 border-t border-gray-600"></div>
-            <span className="px-4 text-sm text-gray-400 bg-gray-800/80">
+            <span className="px-6 text-sm text-gray-400 bg-black/20 rounded-full backdrop-blur-sm">
               or
             </span>
             <div className="flex-1 border-t border-gray-600"></div>
@@ -168,13 +190,13 @@ const Login = () => {
           {/* Sign Up Link */}
           <div className="text-center">
             <p className="text-gray-300">
-              Don't have an account?{" "}
+              New to the developer community?{" "}
               <button
                 type="button"
-                className="text-pink-400 hover:text-pink-300 font-semibold transition-colors duration-200 disabled:opacity-50"
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-200 disabled:opacity-50 underline decoration-dotted"
                 disabled={isLoading}
               >
-                Sign up here
+                Join the matrix
               </button>
             </p>
           </div>
@@ -183,7 +205,9 @@ const Login = () => {
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-gray-400">
           <p>
-            By signing in, you agree to our Terms of Service and Privacy Policy
+            By accessing the portal, you agree to our{" "}
+            <span className="text-gray-300">Developer Code</span> and{" "}
+            <span className="text-gray-300">Privacy Protocol</span>
           </p>
         </div>
       </div>

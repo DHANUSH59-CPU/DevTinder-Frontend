@@ -1,105 +1,135 @@
 import React, { useState } from "react";
-import { Heart, X } from "lucide-react";
+import {
+  Heart,
+  X,
+  Sparkle,
+  MapPin,
+  Camera,
+  Coffee,
+  Mountain,
+} from "lucide-react";
 
 const UserCard = () => {
   const [isLiked, setIsLiked] = useState(null);
 
   const handleInterested = () => {
     setIsLiked(true);
-    // Add swipe animation or card removal logic here
     setTimeout(() => setIsLiked(null), 1000);
   };
 
   const handleIgnore = () => {
     setIsLiked(false);
-    // Add swipe animation or card removal logic here
     setTimeout(() => setIsLiked(null), 1000);
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-secondary/10 rounded-full blur-xl animate-pulse delay-700"></div>
-        <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-accent/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 100 + 50}px`,
+              height: `${Math.random() * 100 + 50}px`,
+              background: `radial-gradient(circle, rgba(${
+                Math.random() > 0.5 ? "124, 58, 237" : "99, 102, 241"
+              }, ${Math.random() * 0.3 + 0.1}) 0%, transparent 70%)`,
+              filter: "blur(40px)",
+              opacity: 0.3,
+              animation: `pulse ${Math.random() * 5 + 5}s infinite alternate`,
+            }}
+          />
+        ))}
       </div>
+
       <div
-        className={`card bg-base-100 backdrop-blur-xl border border-base-content/10 w-72 max-w-sm shadow-2xl shadow-base-content/20 rounded-3xl overflow-hidden transform transition-all duration-700 relative ${
+        className={`bg-gray-900/80 backdrop-blur-2xl border border-purple-500/30 w-80 max-w-sm rounded-3xl overflow-hidden transform transition-all duration-700 relative z-10 ${
           isLiked === true
             ? "rotate-12 scale-95 opacity-50"
             : isLiked === false
             ? "-rotate-12 scale-95 opacity-50"
-            : "hover:scale-105 hover:shadow-base-content/30"
+            : "hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/30"
         }`}
+        style={{
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+        }}
       >
         {/* Card glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 rounded-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-purple-400/5 rounded-3xl pointer-events-none" />
+
         {/* Profile Image */}
-        <figure className="relative h-40">
+        <figure className="relative h-48 group">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
             alt="Profile"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
           {/* Image overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
           {/* Age Badge */}
-          <div className="absolute top-4 right-4 bg-base-100/95 backdrop-blur-sm text-base-content px-4 py-2 rounded-full text-sm font-bold border border-base-content/10 shadow-xl">
+          <div className="absolute top-4 right-4 bg-black/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold border border-purple-500/50 shadow-lg flex items-center">
+            <Sparkle className="w-3 h-3 mr-1 text-purple-400" />
             25
+          </div>
+          {/* Location */}
+          <div className="absolute bottom-4 left-4 bg-black/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium border border-purple-500/30 shadow-lg flex items-center">
+            <MapPin className="w-3 h-3 mr-1 text-purple-300" />2 miles away
           </div>
         </figure>
 
         {/* Profile Info */}
-        <div className="card-body p-5 space-y-3 relative z-10">
+        <div className="p-6 space-y-4 relative z-10">
           <div>
-            <h2 className="text-2xl font-bold text-base-content mb-1 tracking-wide">
+            <h2 className="text-2xl font-bold text-white mb-1 tracking-tight flex items-center">
               Sarah Johnson
+              <span className="ml-2 text-xs bg-gradient-to-r from-purple-600 to-pink-500 text-transparent bg-clip-text">
+                PRO
+              </span>
             </h2>
-            <p className="text-base-content/60 text-sm flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-              2 miles away
-            </p>
-            <p className="text-base-content/80 text-sm leading-relaxed mt-3 font-medium">
-              Love hiking, photography, and coffee shops! 🌟
+            <p className="text-gray-300 text-sm leading-relaxed mt-2 font-medium">
+              Adventure seeker and coffee enthusiast. Always looking for new
+              experiences and connections!
             </p>
 
             {/* Interests */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg transform hover:scale-105 transition-transform hover:shadow-blue-500/30">
-                Photo
+            <div className="flex flex-wrap gap-2 mt-5">
+              <div className="bg-gray-800/80 backdrop-blur border border-purple-500/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg flex items-center">
+                <Camera className="w-3 h-3 mr-1.5 text-purple-300" />
+                Photography
               </div>
-              <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg transform hover:scale-105 transition-transform hover:shadow-purple-500/30">
-                Travel
-              </div>
-              <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg transform hover:scale-105 transition-transform hover:shadow-amber-500/30">
-                Coffee
-              </div>
-              <div className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg transform hover:scale-105 transition-transform hover:shadow-green-500/30">
+              <div className="bg-gray-800/80 backdrop-blur border border-purple-500/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg flex items-center">
+                <Mountain className="w-3 h-3 mr-1.5 text-purple-300" />
                 Hiking
+              </div>
+              <div className="bg-gray-800/80 backdrop-blur border border-purple-500/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg flex items-center">
+                <Coffee className="w-3 h-3 mr-1.5 text-purple-300" />
+                Coffee
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-center gap-4 pt-4">
+          <div className="flex justify-between gap-3 pt-5">
             <button
               onClick={handleIgnore}
-              className="btn btn-sm px-6 py-3 bg-base-200 hover:bg-base-300 border-2 border-error/50 hover:border-error/70 shadow-lg text-error hover:text-error/90 transform hover:scale-105 transition-all duration-300 rounded-2xl font-semibold"
+              className="flex-1 flex items-center justify-center px-4 py-3 bg-gray-800 hover:bg-gray-700/90 border border-red-500/30 hover:border-red-500/50 shadow-lg text-red-400 hover:text-red-300 rounded-xl font-medium text-sm transition-all duration-300 group"
             >
-              <X className="w-4 h-4 mr-2" />
+              <X className="w-5 h-5 mr-2 group-hover:scale-125 transition-transform" />
               Ignore
             </button>
 
             <button
               onClick={handleInterested}
-              className="btn btn-sm px-6 py-3 bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 hover:from-pink-600 hover:via-rose-600 hover:to-red-600 border-0 shadow-xl text-white transform hover:scale-105 transition-all duration-300 rounded-2xl font-semibold"
+              className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 shadow-lg text-white rounded-xl font-medium text-sm transition-all duration-300 group"
               style={{
-                boxShadow:
-                  "0 10px 25px rgba(239, 68, 68, 0.4), 0 4px 10px rgba(239, 68, 68, 0.3)",
+                boxShadow: "0 4px 20px rgba(168, 85, 247, 0.5)",
               }}
             >
-              <Heart className="w-4 h-4 mr-2 fill-current" />
+              <Heart className="w-5 h-5 mr-2 group-hover:scale-125 transition-transform fill-white" />
               Interested
             </button>
           </div>
@@ -109,13 +139,13 @@ const UserCard = () => {
         {isLiked !== null && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
             <div
-              className={`text-4xl font-black transform rotate-12 border-4 rounded-2xl px-8 py-4 backdrop-blur-sm ${
+              className={`text-3xl font-black tracking-wide transform rotate-12 border-4 rounded-xl px-6 py-3 backdrop-blur-md ${
                 isLiked
-                  ? "text-success border-success bg-success/20 shadow-success/50"
-                  : "text-error border-error bg-error/20 shadow-error/50"
-              } shadow-2xl animate-bounce`}
+                  ? "text-purple-300 border-purple-300/70 bg-purple-900/30 shadow-purple-400/50"
+                  : "text-red-300 border-red-300/70 bg-red-900/30 shadow-red-400/50"
+              } shadow-xl animate-bounce-in`}
             >
-              {isLiked ? "INTERESTED" : "IGNORED"}
+              {isLiked ? "LIKED" : "PASSED"}
             </div>
           </div>
         )}
