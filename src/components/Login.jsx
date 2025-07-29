@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Eye, EyeOff, Heart, Code } from "lucide-react";
+import { Eye, EyeOff, Code } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
+import ThreeBackground from "./ThreeBackground";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,6 +46,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Three.js animated background */}
+      <ThreeBackground />
+
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
