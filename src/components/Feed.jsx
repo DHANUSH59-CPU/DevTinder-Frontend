@@ -27,6 +27,7 @@ const Feed = () => {
   useEffect(() => {
     fetchFeed();
   }, []);
+  
 
   return (
     <div className="min-h-screen relative">
