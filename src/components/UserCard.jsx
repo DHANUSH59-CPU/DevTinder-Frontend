@@ -10,7 +10,7 @@ const UserCard = ({ user }) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success"); // success or error
-  const [isAnimating, setIsAnimating] = useState(false);
+
 
   // Default user data
   const defaultUser = {
@@ -36,7 +36,6 @@ const UserCard = ({ user }) => {
 
   const handleSendRequest = async (status, userId) => {
     setIsLoading(true);
-    setIsAnimating(true);
 
     try {
       const res = await axios.post(
@@ -50,10 +49,8 @@ const UserCard = ({ user }) => {
         status === "interested" ? "Connection request sent!" : "User ignored";
       showToastMessage(message, "success");
 
-      // Add animation delay before removing from feed
-      setTimeout(() => {
-        dispatch(removeUserFromFeed(userId));
-      }, 500);
+      // Remove from feed immediately without animation delay
+      dispatch(removeUserFromFeed(userId));
     } catch (err) {
       console.error("Error sending request:", err);
       const errorMessage =
@@ -61,7 +58,6 @@ const UserCard = ({ user }) => {
         err.response?.data?.message ||
         "Failed to send request. Please try again.";
       showToastMessage(errorMessage, "error");
-      setIsAnimating(false); // Reset animation if error
     } finally {
       setIsLoading(false);
     }
@@ -75,9 +71,7 @@ const UserCard = ({ user }) => {
 
         {/* Main card */}
         <div
-          className={`relative card bg-black/60 backdrop-blur-xl w-96 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 border border-purple-500/30 hover:border-purple-400/50 rounded-3xl overflow-hidden ${
-            isAnimating ? "animate-pulse scale-95 opacity-50" : ""
-          }`}
+          className="relative card bg-black/60 backdrop-blur-xl w-96 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 border border-purple-500/30 hover:border-purple-400/50 rounded-3xl overflow-hidden"
         >
           {/* Animated background overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

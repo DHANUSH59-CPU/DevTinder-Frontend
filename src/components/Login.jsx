@@ -18,9 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSignupClick = () => {
-    alert(
-      "Signup functionality coming soon! Please contact admin for account creation."
-    );
+    navigate("/signup");
   };
 
   const handleSubmit = async (e) => {
