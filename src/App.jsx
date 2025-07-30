@@ -16,9 +16,9 @@ const App = () => {
       <Provider store={appStore}>
         <BrowserRouter basename="/">
           <Routes>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/" element={<Body />}>
               <Route path="/" element={<Feed />}></Route>
-              <Route path="/login" element={<Login />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/connections" element={<Connections />}></Route>
               <Route path="/requests" element={<Requests />}></Route>

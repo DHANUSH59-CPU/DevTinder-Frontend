@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
-import ThreeBackground from "./ThreeBackground";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +16,12 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleSignupClick = () => {
+    alert(
+      "Signup functionality coming soon! Please contact admin for account creation."
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,18 +50,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Three.js animated background */}
-      <ThreeBackground />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-purple-900 flex items-center justify-center p-4">
+      {/* Simple gradient background instead of Three.js */}
 
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
-
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-md">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 rounded-2xl mb-6 shadow-2xl shadow-purple-500/30 border border-purple-400/20 relative overflow-hidden">
@@ -73,9 +70,8 @@ const Login = () => {
         </div>
 
         {/* Login Form */}
-        <div className="bg-gray-900/80 backdrop-blur-xl border border-gray-700/50 rounded-3xl shadow-2xl p-8 relative overflow-hidden">
-          {/* Animated border glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-700/20 via-transparent to-gray-700/20 rounded-3xl blur-sm"></div>
+        <div className="bg-gray-900/90 border border-gray-700/50 rounded-3xl shadow-2xl p-8 relative">
+          {/* Removed animated border glow that might interfere with clicks */}
 
           <div className="space-y-6 relative z-10">
             {/* Error Message */}
@@ -192,13 +188,30 @@ const Login = () => {
           </div>
 
           {/* Sign Up Link */}
-          <div className="text-center">
+          <div
+            className="text-center"
+            style={{ position: "relative", zIndex: 10000 }}
+          >
             <p className="text-gray-300">
               New to the developer community?{" "}
               <button
                 type="button"
-                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-200 disabled:opacity-50 underline decoration-dotted"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSignupClick();
+                }}
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-200 disabled:opacity-50 underline decoration-dotted cursor-pointer pointer-events-auto relative z-50"
                 disabled={isLoading}
+                style={{
+                  cursor: "pointer !important",
+                  pointerEvents: "auto !important",
+                  position: "relative",
+                  zIndex: 99999,
+                  display: "inline-block",
+                  background: "transparent",
+                  border: "none",
+                }}
               >
                 Join the matrix
               </button>
