@@ -43,8 +43,10 @@ const Requests = () => {
     return <h1 className="flex justify-center my-10"> No Requests Found</h1>;
 
   return (
-    <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold text-center mb-6 text-white">
+        Connection Requests
+      </h1>
 
       {requests.map((request) => {
         const { _id, firstName, lastName, photoURL, age, gender, about } =
@@ -53,32 +55,38 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300  mx-auto"
+            className="bg-gray-800 rounded-lg shadow-md p-4 mb-4 flex items-center gap-4"
           >
-            <div>
-              <img
-                alt="photo"
-                className="w-20 h-20 rounded-full"
-                src={photoURL}
-              />
-            </div>
-            <div className="text-left mx-4 ">
-              <h2 className="font-bold text-xl">
+            <img
+              alt="photo"
+              className="w-16 h-16 rounded-full object-cover"
+              src={photoURL}
+            />
+
+            <div className="flex-1">
+              <h2 className="text-lg font-semibold text-white">
                 {firstName + " " + lastName}
               </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
+              {age && gender && (
+                <p className="text-gray-300">{age + ", " + gender}</p>
+              )}
+              <p className="text-gray-400 text-sm">{about}</p>
             </div>
-            <div>
+
+            <div className="flex gap-2">
               <button
-                className="btn btn-primary mx-2"
-                onClick={() => reviewRequest("rejected", request.fromUserId._id, request._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={() =>
+                  reviewRequest("rejected", request.fromUserId._id, request._id)
+                }
               >
                 Reject
               </button>
               <button
-                className="btn btn-secondary mx-2"
-                onClick={() => reviewRequest("accepted", request.fromUserId._id, request._id)}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                onClick={() =>
+                  reviewRequest("accepted", request.fromUserId._id, request._id)
+                }
               >
                 Accept
               </button>
