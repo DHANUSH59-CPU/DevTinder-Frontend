@@ -59,7 +59,7 @@ Body
         - sudo apt install nginx
         - sudo systemctl start nginx
         - sudo systemctl enable nginx
-        - Copy code from dist(build files) to /var/www/html/
+        - Copy code from dist(build files) to /var/www/html/ (http server of nginx)
         - sudo scp -r dist/* /var/www/html/
         - Enable port :80 of your instance
     - Backend
