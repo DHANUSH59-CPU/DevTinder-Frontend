@@ -10,7 +10,7 @@ const Feed = () => {
   const dispatch = useDispatch();
 
   const feed = useSelector((store) => store.feed);
-  console.log(feed);
+  // console.log(feed);
 
   const fetchFeed = async () => {
     if (feed) return;

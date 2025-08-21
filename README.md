@@ -116,6 +116,7 @@ Body
     - Amazon SES: Create an Identity
     - Verify your domain name
     - Verify an email address identity
+    - get your AWS_ACCESS_KEY AND SECRETE_KEY IN aws users => ses_user
     - Install AWS SDK - v3 
     - Code Example https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/ses#code-examples
     - Setup SesClient
