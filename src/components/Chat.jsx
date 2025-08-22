@@ -14,18 +14,6 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const userId = user?._id;
 
-  // Early return if no user data
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center h-[80vh]">
-        <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-          <p>Loading user data...</p>
-        </div>
-      </div>
-    );
-  }
-
   const fetchChatMessages = async () => {
     if (!targetUserId) {
       console.error("No target user ID provided");
@@ -37,15 +25,16 @@ const Chat = () => {
         withCredentials: true,
       });
 
-      const chatMessages = chat?.data?.messages?.map((msg) => {
-        const { senderId, text } = msg;
-        return {
-          firstName: senderId?.firstName || "Unknown",
-          lastName: senderId?.lastName || "User",
-          text: text || "",
-        };
-      }) || [];
-      
+      const chatMessages =
+        chat?.data?.messages?.map((msg) => {
+          const { senderId, text } = msg;
+          return {
+            firstName: senderId?.firstName || "Unknown",
+            lastName: senderId?.lastName || "User",
+            text: text || "",
+          };
+        }) || [];
+
       setMessages(chatMessages);
     } catch (err) {
       console.error("Error fetching chat messages:", err);
@@ -61,7 +50,7 @@ const Chat = () => {
       return;
     }
     const socket = createSocketConnection();
-    
+
     // As soon as the page loaded, the socket connection is made and joinChat event is emitted
     socket.emit("joinChat", {
       firstName: user.firstName,
@@ -70,7 +59,10 @@ const Chat = () => {
     });
 
     socket.on("messageReceived", ({ firstName, lastName, text }) => {
-      setMessages((prevMessages) => [...prevMessages, { firstName, lastName, text }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { firstName, lastName, text },
+      ]);
     });
 
     socket.on("messageError", ({ error }) => {
@@ -87,6 +79,18 @@ const Chat = () => {
     };
   }, [userId, targetUserId, user]);
 
+  // Early return if no user data - AFTER all hooks
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center h-[80vh]">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p>Loading user data...</p>
+        </div>
+      </div>
+    );
+  }
+
   const sendMessage = () => {
     if (!window.chatSocket || !newMessage.trim() || !user) {
       return;
@@ -97,7 +101,7 @@ const Chat = () => {
       setTimeout(() => setError(null), 5000);
       return;
     }
-    
+
     window.chatSocket.emit("sendMessage", {
       firstName: user.firstName,
       lastName: user.lastName,
